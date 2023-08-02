@@ -1,10 +1,19 @@
 package com.example.weathertestapp.data
 
-data class WeatherResponse(
-    val city: String,
-    val main: TemperatureInfo
-)
+import com.example.weathertestapp.domain.WeatherEntity
 
-data class TemperatureInfo(
-    val temp: Double
-)
+data class WeatherResponse(
+    val name: String,
+    val main: Main
+) {
+    data class Main(
+        val temp: Double
+    )
+}
+
+fun WeatherResponse.toEntity(): WeatherEntity {
+    return WeatherEntity(
+        name = this.name,
+        temperature = this.main.temp
+    )
+}
