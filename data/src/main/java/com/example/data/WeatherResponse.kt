@@ -1,6 +1,6 @@
-package com.example.weathertestapp.data
+package com.example.data
 
-import com.example.weathertestapp.domain.WeatherEntity
+import com.example.domain.WeatherEntity
 
 data class WeatherResponse(
     val name: String,

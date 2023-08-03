@@ -1,6 +1,7 @@
 package com.example.weathertestapp
 
 import android.app.Application
+import com.example.di.networkModule
 import com.example.weathertestapp.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +16,7 @@ class MyApp : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@MyApp)
-            modules(appModule)
+            modules(appModule, networkModule)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.weathertestapp.domain
+package com.example.domain
 
 data class WeatherEntity(
     val name: String,
