@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.domain.WeatherEntity
+import com.example.data.WeatherResponse
 import org.koin.androidx.compose.getViewModel
 
 
@@ -36,7 +36,6 @@ fun WeatherScreen(viewModel: MainViewModel, navController: NavController) {
     weatherList?.let { list ->
         Column {
             list.forEach { weather ->
-               // Text(text = "${weather.name}: ${weather.temperature}°C")
                 CityWeatherItem(weather) {
                     navController.navigate("details_screen/${weather.name}")
                 }
@@ -46,38 +45,16 @@ fun WeatherScreen(viewModel: MainViewModel, navController: NavController) {
 }
 
 @Composable
-fun CityWeatherItem(cityWeather: WeatherEntity, onClick: () -> Unit) {
+fun CityWeatherItem(cityWeather: WeatherResponse, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable(onClick = onClick), // делаем элемент кликабельным
+            .clickable(onClick = onClick),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = cityWeather.name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Text(text = "${cityWeather.temperature}°C", fontSize = 20.sp)
+        Text(text = cityWeather.name ?: "", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(text = "${cityWeather.main?.temp}°C", fontSize = 20.sp)
     }
 }
 
-//    Image(
-//        modifier = Modifier.fillMaxSize(),
-//        contentScale = ContentScale.FillBounds,
-//        painter = painterResource(id = R.drawable.weather_icon),
-//        contentDescription = null
-//    )
-////    Box(modifier = Modifier
-////        .fillMaxSize()
-////        .background(color = colorResource(id =  R.color.purple_500)))
-//
-//    Column(modifier = Modifier.fillMaxSize()) {
-//
-//        Card(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .background(color = colorResource(id = R.color.teal_200)),
-//            shape = RoundedCornerShape(10.dp)
-////            elevation = 0.dp,
-//
-//        ) {
-//        }
-//    }

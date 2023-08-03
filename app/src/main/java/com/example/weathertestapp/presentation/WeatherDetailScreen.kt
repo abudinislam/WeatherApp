@@ -23,26 +23,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.domain.ForecastEntity
+import com.example.data.WeatherResponse
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun WeatherDetailScreen(cityName: String, temperature: String) {
+fun WeatherDetailScreen(cityName: String) {
     val viewModel: WeatherDetailViewModel = getViewModel()
     viewModel.setCity(cityName)
     val weatherDetail by viewModel.weatherDetail.collectAsState()
-
-    weatherDetail?.let {
-        Text(text = "${it.name}: ${it.temperature}°C")
-    } ?: Text(text = "Loading...")
-
     val weeklyForecast by viewModel.weeklyForecast.collectAsState()
     val monthlyForecast by viewModel.monthlyForecast.collectAsState()
 
     var tabIndex by remember { mutableStateOf(0) }
 
+    weatherDetail?.let {
+        Text(text = "${it.name}: ${it.main?.temp}°C")
+    } ?: Text(text = "Loading...")
+
+
+
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -56,28 +59,31 @@ fun WeatherDetailScreen(cityName: String, temperature: String) {
         ) {
             Tab(text = { Text("Неделя") },
                 selected = tabIndex == 0,
-                onClick = { tabIndex = 0 }
+                onClick = { viewModel.fetchWeeklyWeatherDetail(cityName) }
             )
             Tab(text = { Text("Месяц") },
                 selected = tabIndex == 1,
-                onClick = { tabIndex = 1 }
+                onClick = { viewModel.fetchMonthlyWeatherDetail(cityName) }
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         when (tabIndex) {
-            0 -> ForecastList(forecast = weeklyForecast ?: emptyList())
-            1 -> ForecastList(forecast = monthlyForecast ?: emptyList())
+            0 -> ForecastList(forecast = weeklyForecast)
+            1 -> ForecastList(forecast = monthlyForecast)
         }
     }
 }
 
 @Composable
-fun ForecastList(forecast: List<ForecastEntity>) {
+fun ForecastList(forecast: List<WeatherResponse.ForecastDay>) {
     LazyColumn {
         items(forecast) { dayForecast ->
-            Text(text = "${dayForecast.day}: ${dayForecast.temperature}°C", style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = "${dayForecast.dt}: ${dayForecast.main.temp}°C",
+                style = MaterialTheme.typography.bodySmall
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
     }

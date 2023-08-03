@@ -5,23 +5,25 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherApi {
-    @GET("data/2.5/weather")
+    @GET("weather")
     suspend fun getWeather(
         @Query("q") cityName: String,
         @Query("appid") apiKey: String,
+        @Query("units") units: String = "metric",
     ): WeatherResponse
 
-    @GET("data/2.5/forecast/daily")
+    @GET("forecast/daily")
     suspend fun getWeeklyWeather(
         @Query("q") cityName: String,
-        @Query("cnt") count: Int = 7,
-        @Query("appid") apiKey: String
+        @Query("cnt") count: Int = 6,
+        @Query("appid") apiKey: String,
+        @Query("units") units: String = "metric",
     ): WeatherResponse
 
-    @GET("data/2.5/forecast/daily")
+    @GET("forecast/climate")
     suspend fun getMonthlyWeather(
         @Query("q") cityName: String,
-        @Query("cnt") count: Int = 30,
+        @Query("cnt") count: Int = 5,
         @Query("appid") apiKey: String
     ): WeatherResponse
 }

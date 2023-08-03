@@ -7,11 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -23,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("details_screen/{name}") { backStackEntry ->
                     val cityName = backStackEntry.arguments?.getString("name")
-                    WeatherDetailScreen(cityName = cityName!!, temperature = "")
+                    WeatherDetailScreen(cityName = cityName!!)
                 }
 
             }
