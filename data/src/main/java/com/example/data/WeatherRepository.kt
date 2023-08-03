@@ -17,8 +17,13 @@ class WeatherRepository(private val weatherApi: WeatherApi) {
         }
     }
 
-    suspend fun getWeatherForCity(cityName: String): WeatherEntity? {
-        return weatherApi.getWeather(cityName, apiKey).toEntity()
+    suspend fun getWeatherForCity(cityName: String, days: Int): WeatherEntity? {
+        return if (days <= 7) {
+            val response = weatherApi.getWeeklyWeather(cityName, days, apiKey)
+            response.toEntity()
+        } else {
+            val response = weatherApi.getMonthlyWeather(cityName, days, apiKey)
+            response.toEntity()
+        }
     }
-
 }
