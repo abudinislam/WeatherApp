@@ -42,17 +42,21 @@ class WeatherDetailViewModel(
 
     fun fetchWeeklyWeatherDetail(cityName: String) {
         viewModelScope.launch {
-            _weeklyForecast.value =
-                repository.getWeatherForCity(cityName, 7).weeklyForecast ?: listOf()
-
+            try {
+                _weeklyForecast.value =
+                    repository.getWeatherForCity(cityName, 7).weeklyForecast ?: listOf()
+            } catch (e: Exception) {
+            }
         }
     }
 
     fun fetchMonthlyWeatherDetail(cityName: String) {
         viewModelScope.launch {
-            _monthlyForecast.value =
-                repository.getWeatherForCity(cityName, 30).monthlyForecast ?: listOf()
+            try {
+                _monthlyForecast.value =
+                    repository.getWeatherForCity(cityName, 30).monthlyForecast ?: listOf()
+            } catch (e: Exception) {
+            }
         }
     }
-
 }
