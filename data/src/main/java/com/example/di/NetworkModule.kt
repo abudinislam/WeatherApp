@@ -25,7 +25,5 @@ val networkModule = module {
             .create(WeatherApi::class.java)
     }
 
-    // Репозиторий
     single { WeatherRepository(weatherApi = get()) }
-
 }

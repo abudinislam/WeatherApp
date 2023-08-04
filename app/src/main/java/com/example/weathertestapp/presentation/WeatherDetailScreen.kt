@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun WeatherDetailScreen(cityName: String, temperature: String) {
+fun WeatherDetailScreen(cityName: String) {
     val viewModel: WeatherDetailViewModel = getViewModel()
     viewModel.setCity(cityName)
     val weatherDetail by viewModel.weatherDetail.collectAsState()
