@@ -8,6 +8,7 @@ interface WeatherApi {
     @GET("data/2.5/weather")
     suspend fun getWeather(
         @Query("q") cityName: String,
-        @Query("appid") apiKey: String
-    ): WeatherResponse
+        @Query("appid") apiKey: String,
+        @Query("units") units: String = "metric",
+        ): WeatherResponse
 }

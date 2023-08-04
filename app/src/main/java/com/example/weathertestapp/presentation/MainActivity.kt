@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("details_screen/{name}") { backStackEntry ->
                     val cityName = backStackEntry.arguments?.getString("name")
-                    WeatherDetailScreen(cityName = cityName!!, temperature = "")
+                    WeatherDetailScreen(cityName = cityName!!)
                 }
 
             }
